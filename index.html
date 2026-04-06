@@ -29,7 +29,6 @@ header {
     position: relative;
 }
 
-/* Hamburger dugme (samo za mobitele) */
 .hamburger {
     display: none;
     font-size: 28px;
@@ -42,7 +41,6 @@ header {
     right: 20px;
 }
 
-/* Horizontalni izbornik za desktop */
 .menu {
     list-style: none;
     margin: 20px 0 0 0;
@@ -67,11 +65,8 @@ header {
     font-weight: bold;
 }
 
-.menu li a:hover {
-    background-color: #1f4f73;
-}
+.menu li a:hover { background-color: #1f4f73; }
 
-/* Podizbornik (dropdown) */
 .menu li ul {
     display: none;
     position: absolute;
@@ -84,36 +79,15 @@ header {
     min-width: 180px;
 }
 
-.menu li ul li a {
-    padding: 10px 20px;
-}
+.menu li ul li a { padding: 10px 20px; }
 
-.menu li:hover > ul {
-    display: block;
-}
+.menu li:hover > ul { display: block; }
 
-main {
-    flex: 1 0 auto;
-    padding: 20px;
-}
+main { flex: 1 0 auto; padding: 20px; }
+main section { display: none; margin: 20px auto; max-width: 800px; text-align: justify; }
+section ul { padding-left: 20px; }
+section a { color: #2e6da4; }
 
-/* Sekcije */
-main section {
-    display: none;
-    margin: 20px auto;
-    max-width: 800px;
-    text-align: justify;
-}
-
-section ul {
-    padding-left: 20px;
-}
-
-section a {
-    color: #2e6da4;
-}
-
-/* Centrirana slika */
 .center-image {
     display: block;
     margin: 50px auto 20px auto;
@@ -122,63 +96,59 @@ section a {
     border-radius: 10px;
 }
 
-main section {
-    margin: 20px auto;
-    max-width: 95%;
-    text-align: justify;
-}
-
-/* 📱 Responsivnost */
 @media (max-width: 768px) {
-    .hamburger {
-        display: block;
-        position: relative;   /* umjesto absolute */
-        top: 0;
-        margin: 10px auto;    /* spusti i centriraj ispod headera */
-        text-align: center;
-    }
-
-    nav {
-        display: none;
-        width: 100%;
-    }
-
-    nav.active {
-        display: block;
-    }
-
-    .menu {
-        flex-direction: column;
-    }
-
-    .menu li {
-        flex: 1 1 100%;
-    }
-
-    h1 {
-        font-size: 1.3em;
-    }
-
-    .center-image {
-        max-width: 100%;
-        margin: 20px auto;
-    }
+    .hamburger { display: block; position: relative; top: 0; margin: 10px auto; text-align: center; }
+    nav { display: none; width: 100%; }
+    nav.active { display: block; }
+    .menu { flex-direction: column; }
+    .menu li { flex: 1 1 100%; }
+    h1 { font-size: 1.3em; }
+    .center-image { max-width: 100%; margin: 20px auto; }
 }
-.card {
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  padding: 15px;
-  margin: 15px 0;
-  background-color: #f9f9f9;
-  box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
+
+/* Novosti kartice */
+#novosti .card{
+  border:1px solid #ddd;
+  border-radius:12px;
+  padding:18px;
+  background:#fff;
+  box-shadow:0 3px 10px rgba(0,0,0,0.08);
+  cursor:pointer;
+  transition:0.3s;
+  margin-bottom:15px;
+}
+#novosti .card:hover{ transform:translateY(-3px); }
+#novosti .card h3{ margin-top:0; }
+#novosti .card-content{ display:none; margin-top:10px; }
+#novosti .card.expanded .card-content{ display:block; }
+
+/* Fotogalerija s navigacijom */
+.gallery-container{
+  position: relative;
+  max-width: 100%;
+  margin-top: 10px;
+}
+
+.gallery-container img{
+  width: 100%;
+  border-radius:8px;
+}
+
+.gallery-container .prev, .gallery-container .next{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0,0,0,0.5);
+  color: white;
+  font-size: 24px;
+  padding: 8px 12px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  border-radius: 5px;
+  user-select: none;
 }
 
-.card.expanded {
-  background-color: #fff;
-  box-shadow: 0 0 12px rgba(0,0,0,0.3);
-}
+.gallery-container .prev{ left: 5px; }
+.gallery-container .next{ right: 5px; }
 </style>
 </head>
 <body>
@@ -190,7 +160,7 @@ main section {
         <ul class="menu">
             <li><a href="#" onclick="showSection('o-nama')">O župi</a></li>
             <li><a href="#" onclick="showSection('novosti')">Novosti</a></li>
-            <li><a href="#" onclick="showSection('obavijesti')">Obavijesti</a></li>
+            <li><a href="#" onclick="showSection('obavijesti')">Župni listić</a></li>
             <li><a href="#" onclick="showSection('sv-mala-terezija')">Sv. Mala Terezija</a></li>
             <li><a href="#" onclick="showSection('groblja')">Groblja u župi</a></li>
             <li><a href="#" onclick="showSection('kontakt')">Kontakt</a></li>
@@ -209,36 +179,55 @@ main section {
 <p>Župa Ledinac prvi put je utemeljena 1873. godine, a za patron župe uzet je Sveti Križ, po križu u ledinačkoj nekropoli. Međutim, Ledinac i Rasno nisu uspjeli riješiti gdje će biti sjedište župe, pa od 1878. godine, Ledinac i okolna sela se ponovno nalaze u sastavu župe Rasno.</p>
 <p> Župa je definitivno utemeljena 3. listopada 1930., na osnovi odluke biskupa fra Alojzija Mišića, odvajanjem pojedinih sela od Gruda, Ružića i Rasna. Prvi župnik, don Ante Čule, počeo je graditi veliku crkvu, s namjerom da tu bude svetište svete Terezije od Djeteta Isusa za čitav ovaj kraj. Temelji nove crkve blagoslovljeni su 1939., ali Drugi svjetski rat omeo je radove. Tek 1967. počelo je uređenje unutrašnjosti te je dovršen zvonik. Crkva je obnovljena krajem devedesetih godina prošloga stoljeća, a vanjska fasada je urađena 2000. godine, a 2015. završen je i zvonik, onako kako je odavno projektom planiran, te je tako u potpunosti dovršena izgradnja crkve. 
         </p>
-
     </section>
 
-<section id="novosti">
-  <h2>Novosti</h2>
+    <section id="novosti">
+        <h2>Novosti</h2>
 
-  <div class="card" onclick="openCard(this)">
-    <h3>Devetnica sv. Tereziji</h3>
-    <p>Devetnica će biti od 22. do 30. rujna 2025. Svete Mise su u 18.00 sati, dok je krunica u 17.30. 
-    Svetkovinu zaštitnice župe proslavit ćemo u srijedu, 1. listopada 2025., u 18.00 sati. 
-    Sveto misno slavlje predvodi vlč. Marko Kovač, kancelar Zagrebačke nadbiskupije.</p>
-  </div>
+        <div class="card" onclick="toggleCard(this)">
+            <h3>Devetnica sv. Tereziji</h3>
+            <div class="card-content">
+                <p>Sretan i blagoslovljen Uskrs! <br>
 
-  <div class="card" onclick="openCard(this)">
-    <h3>Sveta Terezija</h3>
-    <p>Bla bla...</p>
-  </div>
-</section>
+Svetoj Žrtvi uskrsnici dajte slavu krštenici!<br>
+Janje ovce oslobodi, Krist nas grešne preporodi.<br>
+Sa životom smrt se sasta i čudesna borba nasta:<br>
+Vođa živih pade tada i živ živcat opet vlada.<br>
 
-<section id="obavijesti">
-  <h2>Obavijesti</h2>
-  <ul>
-    <li><a href="pdf/09-2025.pdf" target="_blank">Župni listić - rujan 2025.</a></li>
-    <li><a href="pdf/listic.pdf" target="_blank">Župni listić - kolovoz 2025.</a></li>
-  </ul>
-</section>
+Uskrs je, najveći kršćanski blagdan u kojem slavimo pobjedu Isusa nad smrću. <br>
+U našoj župi pod obje mise je bilo svečano i mnoštvo svijeta.</p>
+                <div class="gallery-container">
+                    <span class="prev" onclick="prevImage(event, this)">&#10094;</span>
+                    <span class="next" onclick="nextImage(event, this)">&#10095;</span>
+                    <img src="slike/devetnica1.jpg">
+                </div>
+            </div>
+        </div>
+
+        <div class="card" onclick="toggleCard(this)">
+            <h3>Hodočašće mladih</h3>
+            <div class="card-content">
+                <p>Mladi iz župe sudjelovali su na hodočašću u Međugorju.</p>
+                <div class="gallery-container">
+                    <span class="prev" onclick="prevImage(event, this)">&#10094;</span>
+                    <span class="next" onclick="nextImage(event, this)">&#10095;</span>
+                    <img src="slike/hodocasce1.jpg" alt="Hodočašće 1">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="obavijesti">
+        <h2>Obavijesti</h2>
+        <ul>
+            <li><a href="pdf/09-2025.pdf" target="_blank">Župni listić - rujan 2025.</a></li>
+            <li><a href="pdf/listic.pdf" target="_blank">Župni listić - kolovoz 2025.</a></li>
+        </ul>
+    </section>
 
     <section id="sv-mala-terezija">
         <h2>Sv. Mala Terezija</h2>
-        <p>
+ <p>
             Sveta Terezije od Djeteta Isusa i Svetoga lica rođena je kao Marija Franciska Terezija dana 2. siječnja 1873. u Alençonu u Normandiji, u Francuskoj, kao najmlađe od devetero djece Ljudevita i Zelije Martin, koji su također proglašeni svetima. U četvrtoj godini ostaje bez majke. U božićnoj noći 1884. doživjela je osobitu milost obraćenja, koja joj daje želju i snagu zaboraviti sebe i žarko moliti za duše. Svladavši sve zapreke, u 15. godini, protivno pravilima, a na dopuštenje pape Lava XIII., ulazi u samostan bosonogih karmelićanki u Lisieuxu, gdje je kao Terezija od Djeteta Isusa i Svetoga Lica proživjela svoj život u velikoj poniznosti, evanđeoskoj jednostavnosti i beskrajnom pouzdanju u Boga. Hranila ga je Svetim pismom, u kojem je otkrila svoj poziv i mjesto u Crkvi. Živjela ga je sa svom vjernošću te primjerom i riječju poučavala novakinje vrijednosti najmanjih stvari učinjenih iz ljubavi, a ne zbog stjecanja zasluga. Glasovite su njene riječi: „Napokon sam našla svoje zvanje! Moje je zvanje ljubav!… U srcu Crkve, svoje majke, bit ću ljubav. Tako ću biti sve.“
         </p>
         <p>
@@ -249,72 +238,77 @@ main section {
         </p>
         <p>
             Nazivaju je i ''sveticom ruža'' i njezin svetački atribut u ikonografiji jesu ruže, zbog njenog obećanja da će poslije smrti obasuti zemlju kišom nebeskih ruža, tj. milosti i uslišanja. Papa Benedikt XV. darovao joj je 1920. ''pozlaćenu ružu'', a njezino ime nose i pojedine vrste ruža. Suzaštitnica je Francuske, misija i letača, a štovatelji joj se utječu u svim potrebama.
-        </p>
-    </section>
+        </p>    </section>
 
     <section id="groblja">
         <h2>Groblja u župi</h2>
-        <ul>
+ <ul>
             <li><a href="https://maps.app.goo.gl/MMkA7tj7RKLK16Rx9" target="_blank">Ledinac</a></li>
             <li><a href="https://maps.app.goo.gl/HBcraoNMvfFX9GQc9" target="_blank">Višnjica</a></li>
             <li><a href="https://maps.app.goo.gl/pRkCTcEqusv1cftG8" target="_blank">Medovići</a></li>
             <li><a href="https://maps.app.goo.gl/795PbuHNC82RhqiJ7" target="_blank">Podledinac/Pavića groblje</a></li>
             <li><a href="https://maps.app.goo.gl/xW333R8RHymWpANs6" target="_blank">Pogana Vlaka/Tomića groblje</a></li>
-        </ul>
-    </section>
+        </ul>    </section>
 
     <section id="kontakt">
         <h2>Kontakt</h2>
         <p>Adresa: <a href="https://maps.app.goo.gl/76GpqnjJMvfWK7c76" target="_blank">Ledinac 103, 88 340 Grude</a></p>
         <p>Email: <a href="mailto:ivan.marcic@yahoo.com">ivan.marcic@yahoo.com</a></p>
-        <p>Telefon: +387 39 675 115</p>
-    </section>
+        <p>Telefon: +387 39 675 115</p>    </section>
 </main>
 
 <script>
 function showSection(id) {
-    const sections = document.querySelectorAll('main section');
-    sections.forEach(sec => sec.style.display = 'none');
+    document.querySelectorAll('main section').forEach(sec => sec.style.display = 'none');
+    document.getElementById('intro-image').style.display='none';
+    const sel = document.getElementById(id);
+    if(sel) sel.style.display='block';
+    if(window.innerWidth <= 768) document.getElementById('navMenu').classList.remove('active');
+}
 
-    const introImage = document.getElementById('intro-image');
-    if(introImage){
-        introImage.style.display = 'none';
-    }
+function toggleMenu(){ document.getElementById('navMenu').classList.toggle('active'); }
 
-    const selected = document.getElementById(id);
-    if(selected){
-        selected.style.display = 'block';
-        selected.scrollIntoView({behavior:'smooth'});
-    }
-
-    // Kad klikne link na mobitelu, zatvori meni
-    const navMenu = document.getElementById('navMenu');
-    if(window.innerWidth <= 768){
-        navMenu.classList.remove('active');
+function toggleCard(card){
+    const cards = document.querySelectorAll('#novosti .card');
+    if(card.classList.contains('expanded')){
+        cards.forEach(c=>c.style.display='block');
+        card.classList.remove('expanded');
+    } else {
+        cards.forEach(c=>{
+            if(c!==card) c.style.display='none';
+            c.classList.remove('expanded');
+        });
+        card.style.display='block';
+        card.classList.add('expanded');
     }
 }
 
-function toggleMenu() {
-    const navMenu = document.getElementById('navMenu');
-    navMenu.classList.toggle('active');
+// Galerija s navigacijom
+const galleryImages = {
+    "Devetnica sv. Tereziji": ["slike/devetnica1.jpg","slike/devetnica2.jpg","slike/devetnica3.jpg"],
+    "Hodočašće mladih": ["slike/hodocasce1.jpg","slike/hodocasce2.jpg"]
+};
+
+const currentIndex = {};
+
+function prevImage(e, el){
+    e.stopPropagation();
+    const container = el.parentElement;
+    const cardTitle = container.closest('.card').querySelector('h3').textContent;
+    currentIndex[cardTitle] = currentIndex[cardTitle] || 0;
+    currentIndex[cardTitle]--;
+    if(currentIndex[cardTitle]<0) currentIndex[cardTitle] = galleryImages[cardTitle].length-1;
+    container.querySelector('img').src = galleryImages[cardTitle][currentIndex[cardTitle]];
 }
-</script>
-<script>
-function openCard(card) {
-  const cards = document.querySelectorAll('#novosti .card');
-  
-  // ako već ima klasu expanded -> resetiraj
-  if (card.classList.contains('expanded')) {
-    cards.forEach(c => c.style.display = 'block');
-    card.classList.remove('expanded');
-  } else {
-    cards.forEach(c => {
-      c.style.display = 'none';
-      c.classList.remove('expanded');
-    });
-    card.style.display = 'block';
-    card.classList.add('expanded');
-  }
+
+function nextImage(e, el){
+    e.stopPropagation();
+    const container = el.parentElement;
+    const cardTitle = container.closest('.card').querySelector('h3').textContent;
+    currentIndex[cardTitle] = currentIndex[cardTitle] || 0;
+    currentIndex[cardTitle]++;
+    if(currentIndex[cardTitle]>=galleryImages[cardTitle].length) currentIndex[cardTitle]=0;
+    container.querySelector('img').src = galleryImages[cardTitle][currentIndex[cardTitle]];
 }
 </script>
 </body>
