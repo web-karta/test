@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Župa svete Terezije od Djeteta Isusa Ledinac</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
-<link rel="icon" href="https://i0.wp.com/www.cnak.ba/wp-content/uploads/2020/10/IMG_0794-scaled.jpg?w=152&h=228&ssl=1" type="image/jpeg">
+<link rel="icon" href="slike/zupa.jpg" type="image/jpeg">
 <style>
 html, body {
     margin: 0;
@@ -122,6 +122,45 @@ section a { color: #2e6da4; }
 #novosti .card-content{ display:none; margin-top:10px; }
 #novosti .card.expanded .card-content{ display:block; }
 
+#groblja .card {
+  border:1px solid #ddd;
+  border-radius:12px;
+  padding:18px;
+  background:#fff;
+  box-shadow:0 3px 10px rgba(0,0,0,0.08);
+  cursor:pointer;
+  transition:0.3s;
+  margin-bottom:15px;
+}
+
+#groblja .card:hover {
+  transform:translateY(-3px);
+}
+
+#groblja .card h3 { margin-top:0; }
+#groblja .card-content { display:none; margin-top:10px; }
+#groblja .card.expanded .card-content { display:block; }
+
+#o-nama .card {
+  border:1px solid #ddd;
+  border-radius:12px;
+  padding:18px;
+  background:#fff;
+  box-shadow:0 3px 10px rgba(0,0,0,0.08);
+  cursor:pointer;
+  transition:0.3s;
+  margin-bottom:15px;
+}
+
+#o-nama .card:hover {
+  transform:translateY(-3px);
+}
+
+#o-nama .card h3 { margin-top:0; }
+#o-nama .card-content { display:none; margin-top:10px; }
+#o-nama .card.expanded .card-content { display:block; }
+
+
 .gallery-container{
   position: relative;
   max-width: 100%;
@@ -200,6 +239,24 @@ section a { color: #2e6da4; }
     cursor: pointer;
 }
 
+/* Strelice u modalu */
+.modal .prev,
+.modal .next {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    color: white;
+    font-size: 40px;
+    padding: 10px 20px;
+    cursor: pointer;
+    user-select: none;
+    background: rgba(0,0,0,0.5);
+    border-radius: 6px;
+    z-index: 1001; /* iznad slike */
+}
+
+.modal .prev { left: 20px; }
+.modal .next { right: 20px; }
 .card h3 {
     display: flex;
     justify-content: space-between;
@@ -213,15 +270,44 @@ section a { color: #2e6da4; }
     color: #555; /* možete promijeniti boju */
 }
 
-function closeCard(e, el) {
-    e.stopPropagation(); // sprječava otvaranje/klik
-    const card = el.closest('.card');
-    card.classList.remove('expanded');
-    // Vrati sve kartice u vidljivo stanje
-    document.querySelectorAll('#novosti .card').forEach(c => {
-        c.style.display = 'block';
-    });
-}}
+.static-card {
+  border:1px solid #ddd;
+  border-radius:12px;
+  padding:18px;
+  background:#fff;
+  box-shadow:0 3px 10px rgba(0,0,0,0.08);
+  margin-bottom:15px;
+  cursor: default; /* pokazivač nije ruka */
+}
+
+.static-card h3 {
+  margin-top:0;
+}
+
+.menu li ul li a {
+    padding: 10px 20px;
+    font-weight: normal;
+    background-color: #3a7abf;
+}
+
+.menu li ul li a:hover {
+    background-color: #1f4f73;
+}
+
+.card h3 {
+    display: flex;
+    justify-content: flex-start; /* lijevo poravnanje */
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+}
+.card-img {
+    width: 80px; /* veličina slike, prilagodite po potrebi */
+    height: 80px;
+    border-radius: 50%; /* kružni oblik */
+    object-fit: cover;
+    flex-shrink: 0; /* sprječava da se slika smanji */
+}
 </style>
 </head>
 <body>
@@ -231,8 +317,14 @@ function closeCard(e, el) {
     <button class="hamburger" onclick="toggleMenu()">☰</button>
     <nav id="navMenu">
         <ul class="menu">
-            <li><a href="#" onclick="showSection('o-nama')">O župi</a></li>
-            <li><a href="#" onclick="showSection('novosti')">Novosti</a></li>
+<li>
+    <a href="#">O župi</a>
+    <ul>
+        <li><a href="#" onclick="showSubSection('povijest')">Povijest župe</a></li>
+        <li><a href="#" onclick="showSubSection('sadasnje')">Sadašnje stanje</a></li>
+        <li><a href="#" onclick="showSubSection('zupnici')">Župnici</a></li>
+    </ul>
+</li>            <li><a href="#" onclick="showSection('novosti')">Novosti</a></li>
             <li><a href="#" onclick="showSection('obavijesti')">Župni listić</a></li>
             <li><a href="#" onclick="showSection('sv-mala-terezija')">Sv. Mala Terezija</a></li>
             <li><a href="#" onclick="showSection('groblja')">Groblja u župi</a></li>
@@ -242,23 +334,64 @@ function closeCard(e, el) {
 </header>
 
 <div id="intro-image">
-    <img src="https://i0.wp.com/www.cnak.ba/wp-content/uploads/2020/10/IMG_0794-scaled.jpg?w=152&h=228&ssl=1" alt="Župa Ledinac" class="center-image">
+    <img src="slike/zupa.jpg" alt="Župa Ledinac" class="center-image">
+<h2>Dobro došli na stranicu župe Ledinac!</h2>
 </div>
 
 <main>
-    <section id="o-nama">
-        <h2>O župi</h2>
-        <p>Mjesto Ledinac se već u srednjem vijeku spominje kao jedno od naselja Imotske krajine, na krajnjem istočnom rubu Imotskog polja. O životu ovoga mjesta svjedoči srednjovjekovna nekropola na staroj ilirskoj gomili, bogata stećcima raznih veličina i oblika. Mjesto je kroz povijest pripadalo župama Drinovci, zatim Ružići, potom Široki Brijeg te konačno, Rasno.</p>
+<section id="o-nama">
+    <h2>Povijest župe</h2>
+    <div class="static-card" id="povijest">
+<p>Mjesto Ledinac se već u srednjem vijeku spominje kao jedno od naselja Imotske krajine, na krajnjem istočnom rubu Imotskog polja. O životu ovoga mjesta svjedoči srednjovjekovna nekropola na staroj ilirskoj gomili, bogata stećcima raznih veličina i oblika. Mjesto je kroz povijest pripadalo župama Drinovci, zatim Ružići, potom Široki Brijeg te konačno, Rasno.</p>
 <p>Župa Ledinac prvi put je utemeljena 1873. godine, a za patron župe uzet je Sveti Križ, po križu u ledinačkoj nekropoli. Međutim, Ledinac i Rasno nisu uspjeli riješiti gdje će biti sjedište župe, pa od 1878. godine, Ledinac i okolna sela se ponovno nalaze u sastavu župe Rasno.</p>
 <p> Župa je definitivno utemeljena 3. listopada 1930., na osnovi odluke biskupa fra Alojzija Mišića, odvajanjem pojedinih sela od Gruda, Ružića i Rasna. Prvi župnik, don Ante Čule, počeo je graditi veliku crkvu, s namjerom da tu bude svetište svete Terezije od Djeteta Isusa za čitav ovaj kraj. Temelji nove crkve blagoslovljeni su 1939., ali Drugi svjetski rat omeo je radove. Tek 1967. počelo je uređenje unutrašnjosti te je dovršen zvonik. Crkva je obnovljena krajem devedesetih godina prošloga stoljeća, a vanjska fasada je urađena 2000. godine, a 2015. završen je i zvonik, onako kako je odavno projektom planiran, te je tako u potpunosti dovršena izgradnja crkve. 
         </p>
-    </section>
 
+    </div>
+
+    <h2>Sadašnje stanje</h2>
+    <div class="static-card" id="sadasnje">
+        <p>Danas je 2026. godina.</p>
+    </div>
+    <h2>Župnici</h2>
+<div id="zupnici">
+
+        <div class="card" onclick="toggleCard(this)">
+<h3>don Ante Čule</h3>
+1930. - 1970.
+
+        <div class="card-content">
+
+                <p>don Ante Čule rođen je...<br>
+            </div>
+        </div>
+
+        <div class="card" onclick="toggleCard(this)">
+<h3>
+  <img src="slike/vuletic-sjor.jpg" class="card-img"> don Petar Vuletić - Šjor
+</h3>
+1970. - 1978.
+        <div class="card-content">
+
+                <p>don Ante Čule rođen je...<br>
+            </div>
+        </div>
+
+        <div class="card" onclick="toggleCard(this)">
+<h3>
+  <img src="slike/pandzic.jpg" class="card-img"> don Krešo Pandžić
+</h3>
+        <div class="card-content">
+
+                <p>don Ante Čule rođen je...<br>
+            </div>
+        </div>
+
+</section>
     <section id="novosti">
         <h2>Novosti</h2>
 
         <div class="card" onclick="toggleCard(this)">
-    <span class="close-btn" onclick="closeCard(event, this)">×</span>
 
 <h3>Uskrs <span class="datum">5. travnja 2026.</span></h3>
             <div class="card-content">
@@ -283,7 +416,6 @@ U našoj župi pod obje mise je bilo svečano i mnoštvo svijeta.</p>
         </div>
 
         <div class="card" onclick="toggleCard(this)">
-    <span class="close-btn" onclick="closeCard(event, this)">×</span>
 
 <h3>Velika subota <span class="datum">4. travnja 2026.</span></h3>
             <div class="card-content">
@@ -304,14 +436,17 @@ Sutra, na sam Uskrs, mise su u 9 i 11 sati.</p>
 
     <section id="obavijesti">
         <h2>Župni listić</h2>
+<div class="static-card">
+
         <ul>
-            <li><a href="listic/09-2025.pdf" target="_blank">Župni listić - rujan 2025.</a></li>
-            <li><a href="listic/08-2025.pdf" target="_blank">Župni listić - kolovoz 2025.</a></li>
+            <li><a href="listic/04-2026.pdf" target="_blank">Župni listić - travanj 2026.</a></li>
         </ul>
     </section>
 
     <section id="sv-mala-terezija">
         <h2>Sv. Mala Terezija</h2>
+<div class="static-card">
+
  <p>
             Sveta Terezije od Djeteta Isusa i Svetoga lica rođena je kao Marija Franciska Terezija dana 2. siječnja 1873. u Alençonu u Normandiji, u Francuskoj, kao najmlađe od devetero djece Ljudevita i Zelije Martin, koji su također proglašeni svetima. U četvrtoj godini ostaje bez majke. U božićnoj noći 1884. doživjela je osobitu milost obraćenja, koja joj daje želju i snagu zaboraviti sebe i žarko moliti za duše. Svladavši sve zapreke, u 15. godini, protivno pravilima, a na dopuštenje pape Lava XIII., ulazi u samostan bosonogih karmelićanki u Lisieuxu, gdje je kao Terezija od Djeteta Isusa i Svetoga Lica proživjela svoj život u velikoj poniznosti, evanđeoskoj jednostavnosti i beskrajnom pouzdanju u Boga. Hranila ga je Svetim pismom, u kojem je otkrila svoj poziv i mjesto u Crkvi. Živjela ga je sa svom vjernošću te primjerom i riječju poučavala novakinje vrijednosti najmanjih stvari učinjenih iz ljubavi, a ne zbog stjecanja zasluga. Glasovite su njene riječi: „Napokon sam našla svoje zvanje! Moje je zvanje ljubav!… U srcu Crkve, svoje majke, bit ću ljubav. Tako ću biti sve.“
         </p>
@@ -325,21 +460,64 @@ Sutra, na sam Uskrs, mise su u 9 i 11 sati.</p>
             Nazivaju je i ''sveticom ruža'' i njezin svetački atribut u ikonografiji jesu ruže, zbog njenog obećanja da će poslije smrti obasuti zemlju kišom nebeskih ruža, tj. milosti i uslišanja. Papa Benedikt XV. darovao joj je 1920. ''pozlaćenu ružu'', a njezino ime nose i pojedine vrste ruža. Suzaštitnica je Francuske, misija i letača, a štovatelji joj se utječu u svim potrebama.
         </p>    </section>
 
-    <section id="groblja">
-        <h2>Groblja u župi</h2>
- <ul>
-            <li><a href="https://maps.app.goo.gl/MMkA7tj7RKLK16Rx9" target="_blank">Ledinac</a></li><br>
-            <li><a href="https://maps.app.goo.gl/HBcraoNMvfFX9GQc9" target="_blank">Višnjica</a></li><br>
-            <li><a href="https://maps.app.goo.gl/pRkCTcEqusv1cftG8" target="_blank">Medovići</a></li><br>
-            <li><a href="https://maps.app.goo.gl/795PbuHNC82RhqiJ7" target="_blank">Podledinac/Pavića groblje</a></li><br>
-            <li><a href="https://maps.app.goo.gl/xW333R8RHymWpANs6" target="_blank">Pogana Vlaka/Tomića groblje</a></li>
-        </ul>    </section>
+<section id="groblja">
+    <h2>Groblja u župi</h2>
 
+    <div class="card" onclick="toggleCard(this)">
+        <h3><a href="https://maps.app.goo.gl/MMkA7tj7RKLK16Rx9" target="_blank">Ledinac</a></h3>
+        <div class="card-content">
+<p>Groblje Ledinac...
+
+        </div>
+    </div>
+
+    <div class="card" onclick="toggleCard(this)">
+        <h3><a href="https://maps.app.goo.gl/HBcraoNMvfFX9GQc9" target="_blank">Višnjica</a></h3>
+
+        <div class="card-content">
+<p>Groblje Višnjica...
+
+                  </div>
+    </div>
+
+    <div class="card" onclick="toggleCard(this)">
+        <h3><a href="https://maps.app.goo.gl/pRkCTcEqusv1cftG8" target="_blank">Medovići</a></h3>
+
+        <div class="card-content">
+<p>Groblje Medovići...
+
+        </div>
+    </div>
+
+    <div class="card" onclick="toggleCard(this)">
+        <h3><a href="https://maps.app.goo.gl/795PbuHNC82RhqiJ7" target="_blank">Podledinac (Pavića groblje)</a></h3>
+        <div class="card-content">
+<p>Groblje Podledinac...
+
+        </div>
+    </div>
+
+    <div class="card" onclick="toggleCard(this)">
+        <h3><a href="https://maps.app.goo.gl/xW333R8RHymWpANs6" target="_blank">Pogana Vlaka (Tomića groblje)</a></h3>
+        <div class="card-content">
+<p>Groblje Pogana Vlaka...
+
+        </div>
+    </div>
+</section>
     <section id="kontakt">
         <h2>Kontakt</h2>
+<div class="static-card">
+
         <p>Adresa: <a href="https://maps.app.goo.gl/76GpqnjJMvfWK7c76" target="_blank">Ledinac 103, 88 340 Grude</a></p>
         <p>Email: <a href="mailto:ivan.marcic@yahoo.com">ivan.marcic@yahoo.com</a></p>
-        <p>Telefon: +387 39 675 115</p>    </section>
+        <p>Telefon: +387 39 675 115</p> 
+        <p>Instagram: <a href="https://www.instagram.com/zupaledinac?igsh=MWU1dWs2OGVjcWVjeA==">zupaledinac</a></p>
+        <p>Facebook: <a href="https://www.facebook.com/share/1KgJnWWx7d/">zupaledinac</a></p>
+
+  
+ 
+</section>
 </main>
 
 <script>
@@ -349,6 +527,37 @@ function showSection(id) {
     const sel = document.getElementById(id);
     if(sel) sel.style.display='block';
     if(window.innerWidth <= 768) document.getElementById('navMenu').classList.remove('active');
+}
+
+function showSubSection(id) {
+    showSection('o-nama');
+
+    // Sakrij sve podsekcije
+    const subsections = ['povijest','sadasnje','zupnici'];
+    subsections.forEach(sub => {
+        const el = document.getElementById(sub);
+        if(el) el.style.display = 'none';
+    });
+
+    // Sakrij sve h2 naslove
+    document.querySelectorAll('#o-nama h2').forEach(h2 => h2.style.display = 'none');
+
+    // Prikaži odabranu podsekciju
+    const sel = document.getElementById(id);
+    if(sel) sel.style.display = 'block';
+
+    // Prikaži odgovarajući h2 naslov
+    const titleMap = {
+        'povijest':'Povijest župe',
+        'sadasnje':'Sadašnje stanje',
+        'zupnici':'Župnici'
+    };
+
+    document.querySelectorAll('#o-nama h2').forEach(h2 => {
+        if(h2.textContent.trim() === titleMap[id]){
+            h2.style.display = 'block';
+        }
+    });
 }
 
 function toggleMenu(){ document.getElementById('navMenu').classList.toggle('active'); }
@@ -419,10 +628,46 @@ document.querySelectorAll('.gallery-container img').forEach(img => {
 function closeModal() {
     document.getElementById('imageModal').style.display = "none";
 }
+let modalImages = [];
+let modalIndex = 0;
+
+document.querySelectorAll('.gallery-container img').forEach(img => {
+    img.addEventListener('click', function(e) {
+        e.stopPropagation();
+
+        // Pronađi sve slike u istoj galeriji
+        const gallery = this.closest('.gallery-container');
+        modalImages = [...gallery.querySelectorAll('img')].map(i => i.src);
+        modalIndex = modalImages.indexOf(this.src);
+
+        // Otvori modal
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImg');
+        modal.style.display = "block";
+        modalImg.src = modalImages[modalIndex];
+    });
+});
+
+function modalNextImage() {
+    modalIndex = (modalIndex + 1) % modalImages.length;
+    document.getElementById('modalImg').src = modalImages[modalIndex];
+}
+
+function modalPrevImage() {
+    modalIndex = (modalIndex - 1 + modalImages.length) % modalImages.length;
+    document.getElementById('modalImg').src = modalImages[modalIndex];
+}
+
+function closeModal() {
+    document.getElementById('imageModal').style.display = "none";
+}
 </script>
 <div id="imageModal" class="modal">
     <span class="close-modal" onclick="closeModal()">&times;</span>
+    <span class="prev" onclick="modalPrevImage()">❮</span>
+    <span class="next" onclick="modalNextImage()">❯</span>
     <img id="modalImg" src="">
 </div>
+
 </body>
 </html>
