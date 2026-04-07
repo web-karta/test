@@ -296,7 +296,6 @@ section a { color: #2e6da4; }
 
 .card h3 {
     display: flex;
-    justify-content: flex-start; /* lijevo poravnanje */
     align-items: center;
     gap: 10px;
     margin: 0;
@@ -308,6 +307,14 @@ section a { color: #2e6da4; }
     object-fit: cover;
     flex-shrink: 0; /* sprječava da se slika smanji */
 }
+
+.submenu-items {
+    display: none;
+}
+
+.submenu.active .submenu-items {
+    display: block;
+}
 </style>
 </head>
 <body>
@@ -317,9 +324,9 @@ section a { color: #2e6da4; }
     <button class="hamburger" onclick="toggleMenu()">☰</button>
     <nav id="navMenu">
         <ul class="menu">
-<li>
-    <a href="#">O župi</a>
-    <ul>
+<li class="submenu">
+    <a href="#" onclick="toggleSubmenu(event)">O župi</a>
+    <ul class="submenu-items">
         <li><a href="#" onclick="showSubSection('povijest')">Povijest župe</a></li>
         <li><a href="#" onclick="showSubSection('sadasnje')">Sadašnje stanje</a></li>
         <li><a href="#" onclick="showSubSection('zupnici')">Župnici</a></li>
@@ -668,6 +675,12 @@ function closeModal() {
     <span class="next" onclick="modalNextImage()">❯</span>
     <img id="modalImg" src="">
 </div>
-
+<script>
+function toggleSubmenu(e){
+    e.preventDefault();
+    const parent = e.target.closest('.submenu');
+    parent.classList.toggle('active');
+}
+</script>
 </body>
 </html>
