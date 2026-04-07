@@ -122,33 +122,106 @@ section a { color: #2e6da4; }
 #novosti .card-content{ display:none; margin-top:10px; }
 #novosti .card.expanded .card-content{ display:block; }
 
-/* Fotogalerija s navigacijom */
 .gallery-container{
   position: relative;
   max-width: 100%;
   margin-top: 10px;
+  height: 450px;
+  overflow: hidden;
 }
 
 .gallery-container img{
-  width: 100%;
+  width:100%;
+  height:100%;
+  object-fit: contain;
   border-radius:8px;
+  display:none;
 }
 
-.gallery-container .prev, .gallery-container .next{
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: rgba(0,0,0,0.5);
-  color: white;
-  font-size: 24px;
-  padding: 8px 12px;
-  cursor: pointer;
-  border-radius: 5px;
-  user-select: none;
+.gallery-container img.active{
+  display:block;
+}
+.gallery-container .prev,
+.gallery-container .next{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  background:rgba(0,0,0,0.5);
+  color:white;
+  font-size:26px;
+  padding:8px 14px;
+  cursor:pointer;
+  border-radius:6px;
+  user-select:none;
 }
 
-.gallery-container .prev{ left: 5px; }
-.gallery-container .next{ right: 5px; }
+.gallery-container .prev{ left:10px; }
+.gallery-container .next{ right:10px; }
+.close-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 24px;
+    color: #333;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+}
+
+/* Modal za prikaz slike */
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1000; 
+    padding-top: 60px; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgba(0,0,0,0.9); 
+}
+
+.modal img {
+    margin: auto;
+    display: block;
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 10px;
+}
+
+.modal .close-modal {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.card h3 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+}
+
+.card h3 .datum {
+    font-weight: normal;
+    font-size: 0.8em;
+    color: #555; /* možete promijeniti boju */
+}
+
+function closeCard(e, el) {
+    e.stopPropagation(); // sprječava otvaranje/klik
+    const card = el.closest('.card');
+    card.classList.remove('expanded');
+    // Vrati sve kartice u vidljivo stanje
+    document.querySelectorAll('#novosti .card').forEach(c => {
+        c.style.display = 'block';
+    });
+}}
 </style>
 </head>
 <body>
@@ -185,7 +258,9 @@ section a { color: #2e6da4; }
         <h2>Novosti</h2>
 
         <div class="card" onclick="toggleCard(this)">
-            <h3>Devetnica sv. Tereziji</h3>
+    <span class="close-btn" onclick="closeCard(event, this)">×</span>
+
+<h3>Uskrs <span class="datum">5. travnja 2026.</span></h3>
             <div class="card-content">
                 <p>Sretan i blagoslovljen Uskrs! <br>
 
@@ -196,32 +271,42 @@ Vođa živih pade tada i živ živcat opet vlada.<br>
 
 Uskrs je, najveći kršćanski blagdan u kojem slavimo pobjedu Isusa nad smrću. <br>
 U našoj župi pod obje mise je bilo svečano i mnoštvo svijeta.</p>
-                <div class="gallery-container">
-                    <span class="prev" onclick="prevImage(event, this)">&#10094;</span>
-                    <span class="next" onclick="nextImage(event, this)">&#10095;</span>
-                    <img src="slike/devetnica1.jpg">
-                </div>
+<div class="gallery-container">
+    <span class="prev" onclick="prevImage(event, this)">❮</span>
+    <span class="next" onclick="nextImage(event, this)">❯</span>
+    <img src="slike/uskrs1.jfif" class="active">
+    <img src="slike/uskrs2.jfif">
+    <img src="slike/uskrs3.jfif">
+
+</div>
             </div>
         </div>
 
         <div class="card" onclick="toggleCard(this)">
-            <h3>Hodočašće mladih</h3>
+    <span class="close-btn" onclick="closeCard(event, this)">×</span>
+
+<h3>Velika subota <span class="datum">4. travnja 2026.</span></h3>
             <div class="card-content">
-                <p>Mladi iz župe sudjelovali su na hodočašću u Međugorju.</p>
-                <div class="gallery-container">
-                    <span class="prev" onclick="prevImage(event, this)">&#10094;</span>
-                    <span class="next" onclick="nextImage(event, this)">&#10095;</span>
-                    <img src="slike/hodocasce1.jpg" alt="Hodočašće 1">
-                </div>
-            </div>
+                <p>Velika je subota, dan u kojem je sadržan temelj naše vjere, noć u kojoj je Isus pobjedio smrt i proslavio se u Gospodinu. 
+Na samom početku Vazmenog bdijenja ispred crkve je blagoslovljen oganj i upaljena je Uskrsna svijeća. Potom je uslijedila Služba riječi, a nakon toga zazvonila su zvona kada je počela euharistijska služba. 
+Obnovili smo krsna obećanja, blagoslovljeno je jelo. Župnik je na kraju euharistijskog slavlja zahvalio svima koji su dali udjela u župi i župnim aktivnostima u ovom korizmenom vremenu, ali i kroz vrijeme godine. Zahvalio je i vlč. Marinku Miličeviću koji se odazvao njegovom pozivu da u vremenu Velikog trodnevlja i Uskrsa bude u našoj župi. Od srca mu hvala za sudjelovanje u ovim danima u našoj župi. <br>
+Sutra, na sam Uskrs, mise su u 9 i 11 sati.</p>
+<div class="gallery-container">
+    <span class="prev" onclick="prevImage(event, this)">❮</span>
+    <span class="next" onclick="nextImage(event, this)">❯</span>
+    <img src="slike/uskrs1.jfif" class="active">
+    <img src="slike/uskrs2.jfif">
+    <img src="slike/uskrs3.jfif">
+
+</div>
         </div>
     </section>
 
     <section id="obavijesti">
-        <h2>Obavijesti</h2>
+        <h2>Župni listić</h2>
         <ul>
-            <li><a href="pdf/09-2025.pdf" target="_blank">Župni listić - rujan 2025.</a></li>
-            <li><a href="pdf/listic.pdf" target="_blank">Župni listić - kolovoz 2025.</a></li>
+            <li><a href="listic/09-2025.pdf" target="_blank">Župni listić - rujan 2025.</a></li>
+            <li><a href="listic/08-2025.pdf" target="_blank">Župni listić - kolovoz 2025.</a></li>
         </ul>
     </section>
 
@@ -243,10 +328,10 @@ U našoj župi pod obje mise je bilo svečano i mnoštvo svijeta.</p>
     <section id="groblja">
         <h2>Groblja u župi</h2>
  <ul>
-            <li><a href="https://maps.app.goo.gl/MMkA7tj7RKLK16Rx9" target="_blank">Ledinac</a></li>
-            <li><a href="https://maps.app.goo.gl/HBcraoNMvfFX9GQc9" target="_blank">Višnjica</a></li>
-            <li><a href="https://maps.app.goo.gl/pRkCTcEqusv1cftG8" target="_blank">Medovići</a></li>
-            <li><a href="https://maps.app.goo.gl/795PbuHNC82RhqiJ7" target="_blank">Podledinac/Pavića groblje</a></li>
+            <li><a href="https://maps.app.goo.gl/MMkA7tj7RKLK16Rx9" target="_blank">Ledinac</a></li><br>
+            <li><a href="https://maps.app.goo.gl/HBcraoNMvfFX9GQc9" target="_blank">Višnjica</a></li><br>
+            <li><a href="https://maps.app.goo.gl/pRkCTcEqusv1cftG8" target="_blank">Medovići</a></li><br>
+            <li><a href="https://maps.app.goo.gl/795PbuHNC82RhqiJ7" target="_blank">Podledinac/Pavića groblje</a></li><br>
             <li><a href="https://maps.app.goo.gl/xW333R8RHymWpANs6" target="_blank">Pogana Vlaka/Tomića groblje</a></li>
         </ul>    </section>
 
@@ -269,20 +354,12 @@ function showSection(id) {
 function toggleMenu(){ document.getElementById('navMenu').classList.toggle('active'); }
 
 function toggleCard(card){
-    const cards = document.querySelectorAll('#novosti .card');
-    if(card.classList.contains('expanded')){
-        cards.forEach(c=>c.style.display='block');
-        card.classList.remove('expanded');
-    } else {
-        cards.forEach(c=>{
-            if(c!==card) c.style.display='none';
-            c.classList.remove('expanded');
-        });
-        card.style.display='block';
+    if(!card.classList.contains('expanded')){
         card.classList.add('expanded');
+    } else {
+        card.classList.remove('expanded');
     }
 }
-
 // Galerija s navigacijom
 const galleryImages = {
     "Devetnica sv. Tereziji": ["slike/devetnica1.jpg","slike/devetnica2.jpg","slike/devetnica3.jpg"],
@@ -291,25 +368,61 @@ const galleryImages = {
 
 const currentIndex = {};
 
-function prevImage(e, el){
-    e.stopPropagation();
-    const container = el.parentElement;
-    const cardTitle = container.closest('.card').querySelector('h3').textContent;
-    currentIndex[cardTitle] = currentIndex[cardTitle] || 0;
-    currentIndex[cardTitle]--;
-    if(currentIndex[cardTitle]<0) currentIndex[cardTitle] = galleryImages[cardTitle].length-1;
-    container.querySelector('img').src = galleryImages[cardTitle][currentIndex[cardTitle]];
-}
-
 function nextImage(e, el){
     e.stopPropagation();
-    const container = el.parentElement;
-    const cardTitle = container.closest('.card').querySelector('h3').textContent;
-    currentIndex[cardTitle] = currentIndex[cardTitle] || 0;
-    currentIndex[cardTitle]++;
-    if(currentIndex[cardTitle]>=galleryImages[cardTitle].length) currentIndex[cardTitle]=0;
-    container.querySelector('img').src = galleryImages[cardTitle][currentIndex[cardTitle]];
+
+    const gallery = el.closest('.gallery-container');
+    const images = gallery.querySelectorAll('img');
+
+    let index = [...images].findIndex(img => img.classList.contains('active'));
+
+    images[index].classList.remove('active');
+
+    index++;
+
+    if(index >= images.length){
+        index = 0;
+    }
+
+    images[index].classList.add('active');
+}
+
+function prevImage(e, el){
+    e.stopPropagation();
+
+    const gallery = el.closest('.gallery-container');
+    const images = gallery.querySelectorAll('img');
+
+    let index = [...images].findIndex(img => img.classList.contains('active'));
+
+    images[index].classList.remove('active');
+
+    index--;
+
+    if(index < 0){
+        index = images.length - 1;
+    }
+
+    images[index].classList.add('active');
+}
+// Otvori modal kada se klikne na sliku galerije
+document.querySelectorAll('.gallery-container img').forEach(img => {
+    img.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImg');
+        modal.style.display = "block";
+        modalImg.src = this.src;
+    });
+});
+
+function closeModal() {
+    document.getElementById('imageModal').style.display = "none";
 }
 </script>
+<div id="imageModal" class="modal">
+    <span class="close-modal" onclick="closeModal()">&times;</span>
+    <img id="modalImg" src="">
+</div>
 </body>
 </html>
